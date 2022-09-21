@@ -1,6 +1,8 @@
 # super basic review of OOP in Python 
 
 from random import shuffle 
+# import typing 
+from typing import List 
 
 class Card:
 
@@ -28,9 +30,9 @@ class Deck:
     # Creates a sorted deck of playing cards. 13 values, 4 suits.
     # You will iterate over all pairs of suits and values to add them to the deck.
     # Once the deck is initialized, you should prepare it by shuffling it once.
+    SUITS = ["Diamonds", "Spades", "Hearts", "Clubs"]
+    VALUES = ["Ace", "Two" , "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
     def __init__(self):
-        SUITS = ["Diamonds", "Spades", "Hearts", "Clubs"]
-        VALUES = ["Ace", "Two" , "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
         #self.deck = [(suit, value) for suit in SUITS for value in VALUES]
         # map_values_sense = {"Two": 0, "Three":1, "Four":2, "Five":3, "Six":4, "Seven":5, "Eight":6, "Nine":7, "Ten":8, \ 
         #                     "Jack":9, "Queen":10, "King":11, "Ace":12}
@@ -48,6 +50,12 @@ class Deck:
     # Returns the top Card in the deck, but does not modify the deck.
     def peek(self) -> Card: 
         return self.deck[-1] 
+
+    def __len__(self):
+        return len(self.deck) 
+    
+    def __getitem__(self, sliced):
+        return self.deck[sliced] 
     
     # Removes and returns the top card in the deck. The card should no longer be in the Deck.
     def draw(self) -> Card:
@@ -64,20 +72,23 @@ class Deck:
     
     # Calling this function should print all the cards in the deck in their current order.
     def print_deck(self) -> None:
-        for card in self.cards:
+        for card in self.cards: # Um, note to self: there's no self.cards...  
             print (card) 
       
     # Resets the deck to it's original state with all 52 cards.
     # Also shuffle the deck.
     def reset(self) -> None:
-        self.deck = [(suit, value) for suit in SUITS for value in VALUES]
-        self.shuffle(self.deck) 
+        self.deck = [Card(suit, value) for suit in self.SUITS for value in self.VALUES]
+        self.shuffle() 
 
 class Blackjack:
     # Creates a Blackjack game with a new Deck.
     def __init__(self):
-        self.hand = None 
-        self.deck = Deck() 
+        # When implementing Blackjack you'll want to have a few instance variables.
+        self.deck = Deck() # 1. The current deck (Deck object) 
+        self.discard = None # 2. The discard pile (List of Cards) 
+        self.hand = None # 3. The current hand (List of Cards) 
+        # Together all of these should add up to a full deck (totalling 52 cards) 
         self.deal_new_hand() # create a `self.hand` holding the hand of cards for duration of one game  
     
     # Computes the score of a hand. 
@@ -90,6 +101,11 @@ class Blackjack:
     # 9, Jack, Ace -> 20 
     # If the Hand is a bust return -1 (because it always loses)
     def _get_score(self, hand: List[Card]) -> int:
+        if hand:
+            print (type(hand[0]))
+            print (hand[0]) 
+            print ('------------------------')
+            print () 
         total = 0 
         count_aces = 0 
         for card in hand: 
@@ -125,6 +141,9 @@ class Blackjack:
         scores_of_cards = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, \
                             'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King':10}
 
+        print ("string object is not callable???")
+        print (type(card))
+        print (card)
         suit = card.suit()
         return scores_of_cards[suit] 
   
@@ -132,6 +151,7 @@ class Blackjack:
     # E.g. would print out (Ace of Clubs, Jack of Spades, 21)
     # E.g. (Jack of Clubs, 5 of Diamonds, 8 of Hearts, "Bust!")
     def _print_current_hand(self) -> None:
+        pass
 
 
     # The previous hand is discarded and shuffled back into the deck.
@@ -150,7 +170,7 @@ class Blackjack:
                     self.deck.append(each_card) 
                 self.reshuffle() 
             else: 
-                new_hand = self.deck[-2:] 
+                new_hand = self.deck[-2:] # implemented slicing in __getitem__ maybe this will work now? 
                 self.deck = self.deck[:-2]
                 self.hand = new_hand 
             print ("Current hand:")
@@ -171,3 +191,25 @@ class Blackjack:
     # Reshuffles all cards in the "current hand" and "discard pile"
     # and shuffles everything back into the Deck.
     def reshuffle(self) -> None:
+        pass 
+
+
+# Initializes a new deck. The "current_hand" is empty. 
+blackjack = Blackjack()  
+
+# blackjack.deal_new_hand() 
+'''
+Removes top 2 cards from deck and moves them to the current hand.
+Prints the hand and the score of that hand.
+
+For example would pirnt out.
+Note this is just an example, since the deck is shuffled, any 2 cards could come out.
+
+("4 of Clubs", "9 of Diamonds", 13)
+
+Here the 4 of Clubs and 9 of Diamonds would be removed from the Deck and 
+would be the current hand. Discard pile is empty.
+'''
+
+
+
