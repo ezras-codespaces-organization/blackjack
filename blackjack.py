@@ -207,6 +207,15 @@ class Blackjack:
             self.hand.append(self.deck[-1])
             self.deck = self.deck[:-1] 
     
+    def size(self) -> int: 
+        return len(self.deck) 
+    
+    def discard_size(self) -> int:
+        return len(self.discard) 
+    
+    def hand_size(self) -> int: 
+        return len(self.hand) 
+
     # keeps the discard pile separate (there's no hand anymore a.t.m.) 
     # and just reshuffles... only the deck 
     def shuffle(self) -> None: 
@@ -216,21 +225,21 @@ class Blackjack:
         # print () 
         # print (len(self.discard)) 
         # print () 
-        print () 
-        print ('prior to shuffle:')
-        print (self.deck[:4])
-        print ()
-        print (len(self.deck))
-        print () 
-        q = self.deck[:] 
-        shuffle(self.deck) 
-        print () 
-        print ('post shuffle:')
-        print (self.deck[:4])
-        print ()
-        print (len(self.deck))
-        print ()
-        print (set(q) == set(self.deck)) 
+        # print () 
+        # print ('prior to shuffle:')
+        # print (self.deck[:4])
+        # print ()
+        # print (len(self.deck))
+        # print () 
+        # q = self.deck[:] 
+        shuffle(self.deck) # python3 built-in `shuffle`s in place & `return`s None  
+        # print () 
+        # print ('post shuffle:')
+        # print (self.deck[:4]) # sanity check 
+        # print ()
+        # print (len(self.deck))
+        # print ()
+        # print (set(q) == set(self.deck)) # sanity check 
         
 
 
@@ -252,12 +261,25 @@ class Blackjack:
 # Initializes a new deck. The "current_hand" is empty. 
 blackjack = Blackjack()  
 
+print ()
+print ("how big is the deck?")
+print (blackjack.size())
+print () 
+print ("how big is the discard pile?")
+print (blackjack.discard_size()) 
+print () 
+print ("how big is the current hand?")
+print (blackjack.hand_size())
+print () 
+print ('-----------------------------------------------')
+print () 
+
 blackjack.deal_new_hand() 
 '''
 Removes top 2 cards from deck and moves them to the current hand.
 Prints the hand and the score of that hand.
 
-For example would pirnt out.
+For example would print out.
 Note this is just an example, since the deck is shuffled, any 2 cards could come out.
 
 ("4 of Clubs", "9 of Diamonds", 13)
@@ -265,6 +287,73 @@ Note this is just an example, since the deck is shuffled, any 2 cards could come
 Here the 4 of Clubs and 9 of Diamonds would be removed from the Deck and 
 would be the current hand. Discard pile is empty.
 '''
+
+print ()
+print ("how big is the deck?")
+print (blackjack.size())
+print () 
+print ("how big is the discard pile?")
+print (blackjack.discard_size()) 
+print () 
+print ("how big is the current hand?")
+print (blackjack.hand_size())
+print () 
+
+blackjack.deal_new_hand()
+'''
+The previous current hand (4 of Clubs and 9 of Diamonds) is added to the discard pile
+and NOT added back into the deck.
+
+A new 2 cards are dealt into the current hand, for example.
+
+("7 of Spades", "5 of Hearts", 12)
+
+Now the Deck has 48 cards as 2 are in the discard pile and 2 are in the curent hand.
+'''
+
+# sanity check to the foregoing: 
+print ()
+print ("how big is the deck?")
+print (blackjack.size())
+print () 
+print ("how big is the discard pile?")
+print (blackjack.discard_size()) 
+print () 
+print ("how big is the current hand?")
+print (blackjack.hand_size())
+print () 
+
+# seneca_wolf@seneca_wolf:/mnt/c/Users/ezras/Dropbox/PC (2)/Desktop/coachable/black_jack_codespaces_0$ !py
+# python3 blackjack.py
+# Current hand:
+# [<__main__.Card object at 0x7f5db9a6c9a0>, <__main__.Card object at 0x7f5db99fb8b0>]
+# Ace of Diamonds
+# Eight of Diamonds
+# 19
+# Current hand:
+# [<__main__.Card object at 0x7f5db99d8f70>, <__main__.Card object at 0x7f5db99fb6a0>]
+# Four of Clubs
+# Six of Diamonds
+# 10
+# Current hand:
+# [<__main__.Card object at 0x7f5db99d8b50>, <__main__.Card object at 0x7f5db99d8790>]
+# Six of Hearts
+# Nine of Spades
+# 15
+
+# how big is the deck?
+# 46
+
+# how big is the discard pile?
+# 4
+
+# how big is the current hand?
+# 2
+
+# seneca_wolf@seneca_wolf:/mnt/c/Users/ezras/Dropbox/PC (2)/Desktop/coachable/black_jack_codespaces_0$
+
+
+
 
 
 
