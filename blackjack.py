@@ -210,12 +210,28 @@ class Blackjack:
     # keeps the discard pile separate (there's no hand anymore a.t.m.) 
     # and just reshuffles... only the deck 
     def shuffle(self) -> None: 
-        print (self.deck) 
+        # print (self.deck) 
+        # print ()
+        # print (len(self.deck)) 
+        # print () 
+        # print (len(self.discard)) 
+        # print () 
+        print () 
+        print ('prior to shuffle:')
+        print (self.deck[:4])
         print ()
-        print (len(self.deck)) 
+        print (len(self.deck))
         print () 
-        print (len(self.discard)) 
+        q = self.deck[:] 
+        shuffle(self.deck) 
         print () 
+        print ('post shuffle:')
+        print (self.deck[:4])
+        print ()
+        print (len(self.deck))
+        print ()
+        print (set(q) == set(self.deck)) 
+        
 
 
     # Reshuffles all cards in the "current hand" and "discard pile"
