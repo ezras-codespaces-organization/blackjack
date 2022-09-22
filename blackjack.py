@@ -13,11 +13,11 @@ class Card:
         self.value = value # should be one of ["Ace", "Two" , "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
 
     # Returns the suit of the card.
-    def suit(self) -> str:
+    def get_suit(self) -> str:
         return self.suit 
 
     # Returns the value of the card.
-    def value(self) -> str:
+    def get_value(self) -> str:
         return self.value 
         
     # Returns a string representation of Card
@@ -101,11 +101,12 @@ class Blackjack:
     # 9, Jack, Ace -> 20 
     # If the Hand is a bust return -1 (because it always loses)
     def _get_score(self, hand: List[Card]) -> int:
-        if hand:
-            print (type(hand[0]))
-            print (hand[0]) 
-            print ('------------------------')
-            print () 
+        if hand: # was formerly for debugging... 
+            pass 
+            # print (type(hand[0]))
+            # print (hand[0]) 
+            # print ('------------------------')
+            # print () 
         total = 0 
         count_aces = 0 
         for card in hand: 
@@ -141,17 +142,23 @@ class Blackjack:
         scores_of_cards = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8, \
                             'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King':10}
 
-        print ("string object is not callable???")
-        print (type(card))
-        print (card)
-        suit = card.suit()
-        return scores_of_cards[suit] 
+        # print ("string object is not callable???")
+        # print (type(card))
+        # print (card)
+        # suit = card.get_suit()
+        value = card.get_value() 
+        return scores_of_cards[value] 
   
     # Prints the current hand and score.
     # E.g. would print out (Ace of Clubs, Jack of Spades, 21)
     # E.g. (Jack of Clubs, 5 of Diamonds, 8 of Hearts, "Bust!")
     def _print_current_hand(self) -> None:
-        pass
+        # pass
+        if not self.hand:
+            print ("no hand!") 
+        else:
+            for card in self.hand:
+                print (card) 
 
 
     # The previous hand is discarded and shuffled back into the deck.
@@ -166,15 +173,18 @@ class Blackjack:
         else: 
             if self.hand: 
                 for each_card in self.hand: 
-                    self.hand.remove(each_card) 
-                    self.deck.append(each_card) 
+                    self.hand.remove(each_card) # wasted logic b/c of how i've implemented reshuffle which is wasted logic ...
+                    self.deck.append(each_card) # c.f. just doing `Blackjack()` again, right? 
                 self.reshuffle() 
             else: 
                 new_hand = self.deck[-2:] # implemented slicing in __getitem__ maybe this will work now? 
                 self.deck = self.deck[:-2]
                 self.hand = new_hand 
             print ("Current hand:")
-            print (self.hand) 
+            # print (self.hand) # It should also print the current hand and score of that hand. 
+            # Current hand:
+            # [<__main__.Card object at 0x7f7f107a10a0>, <__main__.Card object at 0x7f7f1079c640>]
+            self._print_current_hand()
             print (self._get_score(self.hand)) 
 
 
@@ -191,13 +201,19 @@ class Blackjack:
     # Reshuffles all cards in the "current hand" and "discard pile"
     # and shuffles everything back into the Deck.
     def reshuffle(self) -> None:
-        pass 
+        # pass 
+        # presently it isn't clear to me what the discard pile is or when it would ever be used 
+        # however the deal is, from the instructions, that the discard pile + the hand + the deck == a 52 card deck 
+        #deck = self.hand[:] + self.discard[:] + self.deck[:] # not sure it is ever a good idea to use `+` on lists in python, hmmmm...
+        self.deck = Deck() # ---^--- seems like if i continued that idea i would be re-implementing logic that exists elsewhere 
+        self.hand = None 
+        self.discard = None # okay everything is reset... now `reshuffle` is exactly the same logic as `Blackjack()` right? :-( 
 
 
 # Initializes a new deck. The "current_hand" is empty. 
 blackjack = Blackjack()  
 
-# blackjack.deal_new_hand() 
+blackjack.deal_new_hand() 
 '''
 Removes top 2 cards from deck and moves them to the current hand.
 Prints the hand and the score of that hand.
