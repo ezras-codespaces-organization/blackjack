@@ -86,8 +86,8 @@ class Blackjack:
     def __init__(self):
         # When implementing Blackjack you'll want to have a few instance variables.
         self.deck = Deck() # 1. The current deck (Deck object) 
-        self.discard = None # 2. The discard pile (List of Cards) 
-        self.hand = None # 3. The current hand (List of Cards) 
+        self.discard = [] # 2. The discard pile (List of Cards)
+        self.hand = [] # 3. The current hand (List of Cards) 
         # Together all of these should add up to a full deck (totalling 52 cards) 
         self.deal_new_hand() # create a `self.hand` holding the hand of cards for duration of one game  
     
@@ -171,11 +171,21 @@ class Blackjack:
         if len(self.deck) < 2: 
             print ("Error: deck to skinny--reshuffle first!") 
         else: 
-            if self.hand: 
-                for each_card in self.hand: 
-                    self.hand.remove(each_card) # wasted logic b/c of how i've implemented reshuffle which is wasted logic ...
-                    self.deck.append(each_card) # c.f. just doing `Blackjack()` again, right? 
-                self.reshuffle() 
+            if self.hand:
+                # print ()
+                # print (self.hand)
+                # print (len(self.hand)) 
+                # print ()  
+                for each_card in self.hand[:]: # um, that `[:]` is a big deal, how can i remember to never make this mistake again?!?
+                    self.hand.remove(each_card) 
+                    #self.deck.append(each_card)
+                    self.discard.append(each_card)
+                # print ()
+                # print (self.discard)
+                # print (len(self.discard))
+                # print () 
+                self.shuffle() 
+                #self.reshuffle() 
             new_hand = self.deck[-2:] # implemented slicing in __getitem__ maybe this will work now? 
             self.deck = self.deck[:-2]
             self.hand = new_hand 
@@ -196,6 +206,17 @@ class Blackjack:
         else: 
             self.hand.append(self.deck[-1])
             self.deck = self.deck[:-1] 
+    
+    # keeps the discard pile separate (there's no hand anymore a.t.m.) 
+    # and just reshuffles... only the deck 
+    def shuffle(self) -> None: 
+        print (self.deck) 
+        print ()
+        print (len(self.deck)) 
+        print () 
+        print (len(self.discard)) 
+        print () 
+
 
     # Reshuffles all cards in the "current hand" and "discard pile"
     # and shuffles everything back into the Deck.
@@ -204,9 +225,12 @@ class Blackjack:
         # presently it isn't clear to me what the discard pile is or when it would ever be used 
         # however the deal is, from the instructions, that the discard pile + the hand + the deck == a 52 card deck 
         #deck = self.hand[:] + self.discard[:] + self.deck[:] # not sure it is ever a good idea to use `+` on lists in python, hmmmm...
+        
+        
+        # what i used to do (for the entirety of this method) before i understood how discard is supposed to used --->  
         self.deck = Deck() # ---^--- seems like if i continued that idea i would be re-implementing logic that exists elsewhere 
-        self.hand = None 
-        self.discard = None # okay everything is reset... now `reshuffle` is exactly the same logic as `Blackjack()` right? :-( 
+        self.hand = [] 
+        self.discard = [] # okay everything is reset... now `reshuffle` is exactly the same logic as `Blackjack()` right? :-( 
 
 
 # Initializes a new deck. The "current_hand" is empty. 
