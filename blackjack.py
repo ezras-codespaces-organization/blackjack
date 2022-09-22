@@ -89,8 +89,14 @@ class Blackjack:
         self.discard = [] # 2. The discard pile (List of Cards)
         self.hand = [] # 3. The current hand (List of Cards) 
         # Together all of these should add up to a full deck (totalling 52 cards) 
-        self.deal_new_hand() # create a `self.hand` holding the hand of cards for duration of one game  
-    
+        #self.deal_new_hand() # create a `self.hand` holding the hand of cards for duration of one game  
+        print () 
+        print ('after instantiating:') # yes, shuffled 
+        for card in self.deck:
+            print (card) 
+        print () 
+        print (len(self.deck)) 
+        print () 
     # Computes the score of a hand. 
     # For examples of hands and scores as a number. 
     # 2,5 -> 7
@@ -250,12 +256,9 @@ class Blackjack:
         # presently it isn't clear to me what the discard pile is or when it would ever be used 
         # however the deal is, from the instructions, that the discard pile + the hand + the deck == a 52 card deck 
         #deck = self.hand[:] + self.discard[:] + self.deck[:] # not sure it is ever a good idea to use `+` on lists in python, hmmmm...
-        
-        
-        # what i used to do (for the entirety of this method) before i understood how discard is supposed to used --->  
         self.deck = Deck() # ---^--- seems like if i continued that idea i would be re-implementing logic that exists elsewhere 
         self.hand = [] 
-        self.discard = [] # okay everything is reset... now `reshuffle` is exactly the same logic as `Blackjack()` right? :-( 
+        self.discard = []
 
 
 # Initializes a new deck. The "current_hand" is empty. 
