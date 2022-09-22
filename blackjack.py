@@ -90,13 +90,13 @@ class Blackjack:
         self.hand = [] # 3. The current hand (List of Cards) 
         # Together all of these should add up to a full deck (totalling 52 cards) 
         #self.deal_new_hand() # create a `self.hand` holding the hand of cards for duration of one game  
-        print () 
-        print ('after instantiating:') # yes, shuffled 
-        for card in self.deck:
-            print (card) 
-        print () 
-        print (len(self.deck)) 
-        print () 
+        # print () 
+        # print ('after instantiating:') # yes, shuffled 
+        # for card in self.deck:
+        #     print (card) 
+        # print () 
+        # print (len(self.deck)) 
+        # print () 
     # Computes the score of a hand. 
     # For examples of hands and scores as a number. 
     # 2,5 -> 7
@@ -165,6 +165,8 @@ class Blackjack:
         else:
             for card in self.hand:
                 print (card) 
+        print (self._get_score(self.hand)) 
+        
 
 
     # The previous hand is discarded and shuffled back into the deck.
@@ -212,6 +214,8 @@ class Blackjack:
         else: 
             self.hand.append(self.deck[-1])
             self.deck = self.deck[:-1] 
+        self._print_current_hand()  
+        self._get_score(self.hand)
     
     def size(self) -> int: 
         return len(self.deck) 
@@ -326,34 +330,90 @@ print ("how big is the current hand?")
 print (blackjack.hand_size())
 print () 
 
+print ()
+print ('hit 1:') 
+blackjack.hit()
+print () 
+'''
+Now we take the top card of the Deck and add it to the current hand. Now the current hand will be 
+
+("7 of Spades", "5 of Hearts" "Ace of Hearts", 13)
+
+The score of the hand is 13 because if we used the 11 score for Ace, the hand would bust. So we choose 1. 
+
+The Deck now has 47 cards. 3 in current hand. 2 in the discard pile.
+'''
+
+print ()
+print ('hit 2:') 
+blackjack.hit()
+print () 
+
 # seneca_wolf@seneca_wolf:/mnt/c/Users/ezras/Dropbox/PC (2)/Desktop/coachable/black_jack_codespaces_0$ !py
 # python3 blackjack.py
-# Current hand:
-# [<__main__.Card object at 0x7f5db9a6c9a0>, <__main__.Card object at 0x7f5db99fb8b0>]
-# Ace of Diamonds
-# Eight of Diamonds
-# 19
-# Current hand:
-# [<__main__.Card object at 0x7f5db99d8f70>, <__main__.Card object at 0x7f5db99fb6a0>]
-# Four of Clubs
-# Six of Diamonds
-# 10
-# Current hand:
-# [<__main__.Card object at 0x7f5db99d8b50>, <__main__.Card object at 0x7f5db99d8790>]
-# Six of Hearts
-# Nine of Spades
-# 15
 
 # how big is the deck?
-# 46
+# 52
 
 # how big is the discard pile?
-# 4
+# 0
+
+# how big is the current hand?
+# 0
+
+# -----------------------------------------------
+
+# Current hand:
+# [<__main__.Card object at 0x7f5e640b43d0>, <__main__.Card object at 0x7f5e640b47f0>]
+# Queen of Diamonds
+# Ten of Spades
+# 20
+# 20
+
+# how big is the deck?
+# 50
+
+# how big is the discard pile?
+# 0
 
 # how big is the current hand?
 # 2
 
+# Current hand:
+# [<__main__.Card object at 0x7f5e64059a60>, <__main__.Card object at 0x7f5e640b4f10>]
+# Nine of Diamonds
+# Three of Clubs
+# 12
+# 12
+
+# how big is the deck?
+# 48
+
+# how big is the discard pile?
+# 2
+
+# how big is the current hand?
+# 2
+
+
+# hit 1:
+# Nine of Diamonds
+# Three of Clubs
+# Seven of Hearts
+# 19
+
+
+# hit 2:
+# Nine of Diamonds
+# Three of Clubs
+# Seven of Hearts
+# Queen of Clubs
+# 29
+
 # seneca_wolf@seneca_wolf:/mnt/c/Users/ezras/Dropbox/PC (2)/Desktop/coachable/black_jack_codespaces_0$
+
+
+
 
 
 
