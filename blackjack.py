@@ -176,12 +176,11 @@ class Blackjack:
                     self.hand.remove(each_card) # wasted logic b/c of how i've implemented reshuffle which is wasted logic ...
                     self.deck.append(each_card) # c.f. just doing `Blackjack()` again, right? 
                 self.reshuffle() 
-            else: 
-                new_hand = self.deck[-2:] # implemented slicing in __getitem__ maybe this will work now? 
-                self.deck = self.deck[:-2]
-                self.hand = new_hand 
+            new_hand = self.deck[-2:] # implemented slicing in __getitem__ maybe this will work now? 
+            self.deck = self.deck[:-2]
+            self.hand = new_hand 
             print ("Current hand:")
-            # print (self.hand) # It should also print the current hand and score of that hand. 
+            print (self.hand) # It should also print the current hand and score of that hand. 
             # Current hand:
             # [<__main__.Card object at 0x7f7f107a10a0>, <__main__.Card object at 0x7f7f1079c640>]
             self._print_current_hand()
